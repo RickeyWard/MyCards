@@ -64,6 +64,8 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
     const name = config.name ?? stateObj?.attributes.friendly_name ?? "";
     const subtitle = this._subtitle;
     const interactive = this.hasInteraction;
+    const iconAtEnd = (config.icon_position ?? "start") === "end";
+    const iconShape = config.icon_shape ?? "circle";
     const iconStyle = {
       "--icon-color": `rgb(${computeRgbColor(config.icon_color ?? "primary")})`,
       "--icon-background": `rgba(${computeRgbColor(config.icon_color ?? "primary")}, 0.2)`,
@@ -81,12 +83,18 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
         })}
         @action=${this._handleAction}
       >
-        <div class="container" style=${`justify-content: ${config.alignment ?? "start"}`}>
+        <div
+          class=${classMap({ container: true, "icon-end": iconAtEnd })}
+          style=${`justify-content: ${config.alignment ?? "start"}`}
+        >
           ${
             config.hide_icon
               ? nothing
               : html`
-                  <div class="icon" style=${styleMap(iconStyle)}>
+                  <div
+                    class=${classMap({ icon: true, [`shape-${iconShape}`]: true })}
+                    style=${styleMap(iconStyle)}
+                  >
                     ${
                       stateObj
                         ? html`<ha-state-icon
@@ -132,6 +140,20 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
         border-radius: var(--icon-border-radius);
         color: var(--icon-color);
         background-color: var(--icon-background);
+      }
+      /* Logical order, so the swap follows the document direction. */
+      .container.icon-end .icon {
+        order: 1;
+      }
+      .icon.shape-square {
+        border-radius: var(--icon-square-border-radius);
+      }
+      /* Bare glyph: keep the colour, drop the shape and its padding. */
+      .icon.shape-none {
+        width: auto;
+        height: auto;
+        border-radius: 0;
+        background-color: transparent;
       }
       .icon ha-icon,
       .icon ha-state-icon {

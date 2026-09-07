@@ -18,3 +18,11 @@ export const baseCardConfigStruct = object({
 
 export const ALIGNMENTS = ["start", "center", "end"] as const;
 export type Alignment = (typeof ALIGNMENTS)[number];
+
+/** Which side of the text the icon sits on. Logical, so it flips under RTL. */
+export const ICON_POSITIONS = ["start", "end"] as const;
+export type IconPosition = (typeof ICON_POSITIONS)[number];
+
+/** `none` renders a bare coloured glyph with no background shape. */
+export const ICON_SHAPES = ["circle", "square", "none"] as const;
+export type IconShape = (typeof ICON_SHAPES)[number];

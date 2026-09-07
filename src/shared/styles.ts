@@ -9,6 +9,7 @@ export const themeVariables = css`
     --spacing: var(--mycards-spacing, 12px);
     --icon-size: var(--mycards-icon-size, 40px);
     --icon-border-radius: var(--mycards-icon-border-radius, 50%);
+    --icon-square-border-radius: var(--mycards-icon-square-border-radius, 12px);
     --icon-symbol-size: var(--mycards-icon-symbol-size, 21px);
     --title-font-size: var(--mycards-title-font-size, 16px);
     --title-font-weight: var(--mycards-title-font-weight, 500);

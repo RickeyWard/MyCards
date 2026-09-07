@@ -6,7 +6,7 @@ import { editorType } from "../../const";
 import type { HaFormSchema, HomeAssistant, LovelaceCardEditor } from "../../ha";
 import { fireEvent } from "../../ha";
 import { COLORS } from "../../shared/colors";
-import { ALIGNMENTS } from "../../shared/config";
+import { ALIGNMENTS, ICON_POSITIONS, ICON_SHAPES } from "../../shared/config";
 import { setupCustomLocalize } from "../../utils/localize";
 import { loadHaComponents } from "../../utils/loader";
 import { ROOM_TITLE_CARD_NAME, roomTitleCardConfigStruct } from "./config";
@@ -42,6 +42,24 @@ const SCHEMA: readonly HaFormSchema[] = [
           select: {
             mode: "dropdown",
             options: ALIGNMENTS.map((value) => ({ value, label: value })),
+          },
+        },
+      },
+      {
+        name: "icon_position",
+        selector: {
+          select: {
+            mode: "dropdown",
+            options: ICON_POSITIONS.map((value) => ({ value, label: value })),
+          },
+        },
+      },
+      {
+        name: "icon_shape",
+        selector: {
+          select: {
+            mode: "dropdown",
+            options: ICON_SHAPES.map((value) => ({ value, label: value })),
           },
         },
       },

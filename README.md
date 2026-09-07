@@ -37,18 +37,20 @@ tap_action:
   navigation_path: /lovelace/living-room
 ```
 
-| Option              | Type    | Default      | Description                                              |
-| ------------------- | ------- | ------------ | -------------------------------------------------------- |
-| `name`              | string  | entity name  | Title text.                                              |
-| `icon`              | string  | entity icon  | Any `mdi:` icon.                                         |
-| `icon_color`        | string  | `primary`    | Theme colour token (`blue`, `red`, …) or any CSS colour. |
-| `entity`            | string  | —            | Optional entity; drives the default icon and subtitle.   |
-| `subtitle`          | string  | entity state | Static subtitle; overrides the entity state.             |
-| `alignment`         | string  | `start`      | `start`, `center` or `end`.                              |
-| `hide_icon`         | boolean | `false`      | Render title only.                                       |
-| `tap_action`        | action  | `none`       | Standard HA action config.                               |
-| `hold_action`       | action  | `none`       | Standard HA action config.                               |
-| `double_tap_action` | action  | `none`       | Standard HA action config.                               |
+| Option              | Type    | Default      | Description                                                                 |
+| ------------------- | ------- | ------------ | --------------------------------------------------------------------------- |
+| `name`              | string  | entity name  | Title text.                                                                 |
+| `icon`              | string  | entity icon  | Any `mdi:` icon.                                                            |
+| `icon_color`        | string  | `primary`    | Theme colour token (`blue`, `red`, …) or any CSS colour.                    |
+| `icon_position`     | string  | `start`      | `start` or `end` — which side of the text the icon sits on.                 |
+| `icon_shape`        | string  | `circle`     | `circle`, `square`, or `none` for a bare glyph with no coloured background. |
+| `entity`            | string  | —            | Optional entity; drives the default icon and subtitle.                      |
+| `subtitle`          | string  | entity state | Static subtitle; overrides the entity state.                                |
+| `alignment`         | string  | `start`      | `start`, `center` or `end`.                                                 |
+| `hide_icon`         | boolean | `false`      | Render title only.                                                          |
+| `tap_action`        | action  | `none`       | Standard HA action config.                                                  |
+| `hold_action`       | action  | `none`       | Standard HA action config.                                                  |
+| `double_tap_action` | action  | `none`       | Standard HA action config.                                                  |
 
 The card is fully configurable from the UI editor.
 

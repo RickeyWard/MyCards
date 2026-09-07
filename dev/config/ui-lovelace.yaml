@@ -20,6 +20,28 @@ views:
         entity: sensor.kitchen_temperature
 
       - type: custom:mycards-room-title-card
+        name: Icon on the end
+        icon: mdi:bed
+        icon_color: purple
+        icon_position: end
+        entity: sensor.living_room_temperature
+
+      - type: custom:mycards-room-title-card
+        name: Bare glyph, no circle
+        icon: mdi:washing-machine
+        icon_color: teal
+        icon_shape: none
+        subtitle: No coloured background
+
+      - type: custom:mycards-room-title-card
+        name: Squared icon, end, right-aligned
+        icon: mdi:garage
+        icon_color: deep-orange
+        icon_shape: square
+        icon_position: end
+        alignment: end
+
+      - type: custom:mycards-room-title-card
         name: Centered, no icon
         subtitle: Static subtitle
         alignment: center
