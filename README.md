@@ -49,6 +49,7 @@ tap_action:
 | `title_size`        | number  | `16`         | Title size in px; the subtitle scales with it (81%).                          |
 | `icon_gap`          | number  | `12`         | Space between the icon and the text, in px.                                   |
 | `icon_size`         | number  | `40`         | Icon size in px; the glyph inside the shape scales with it (52.5%).           |
+| `icon_align`        | string  | `center`     | `center` or `top` — vertical placement against the text.                      |
 | `alignment`         | string  | `start`      | `start`, `center` or `end`; the title and subtitle follow it.                 |
 | `hide_icon`         | boolean | `false`      | Render title only.                                                            |
 | `tap_action`        | action  | `none`       | Standard HA action config.                                                    |

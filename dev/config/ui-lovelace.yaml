@@ -90,6 +90,13 @@ views:
         icon_gap: 4
 
       - type: custom:mycards-room-title-card
+        name: Icon pinned to the top
+        icon: mdi:stairs
+        icon_color: brown
+        icon_align: top
+        subtitle: Two lines, icon aligned with the first
+
+      - type: custom:mycards-room-title-card
         name: Centered with subtitle
         icon: mdi:home-heart
         icon_color: pink

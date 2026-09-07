@@ -7,6 +7,7 @@
       "icon_position": "Icon position",
       "icon_shape": "Icon shape",
       "icon_size": "Icon size",
+      "icon_align": "Icon vertical alignment",
       "hide_icon": "Hide icon",
       "entity": "Entity",
       "subtitle": "Subtitle",

@@ -85,6 +85,7 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
     };
     const titleSize = config.title_size;
     const iconSize = config.icon_size;
+    const iconAtTop = (config.icon_align ?? "center") === "top";
     const containerStyle = {
       ...(titleSize
         ? {
@@ -120,6 +121,7 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
           class=${classMap({
             container: true,
             "icon-end": iconAtEnd,
+            "icon-top": iconAtTop,
             [`align-${alignment}`]: true,
           })}
           style=${styleMap(containerStyle)}
@@ -198,6 +200,13 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
         border-radius: var(--icon-border-radius);
         color: var(--icon-color);
         background-color: var(--icon-background);
+      }
+      /*
+       * align-self on the icon alone, not align-items on the row: when the icon
+       * is the taller element, the text should stay put rather than follow it up.
+       */
+      .container.icon-top .icon {
+        align-self: flex-start;
       }
       /* Logical order, so the swap follows the document direction. */
       .container.icon-end .icon {

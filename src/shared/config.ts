@@ -23,6 +23,10 @@ export type Alignment = (typeof ALIGNMENTS)[number];
 export const ICON_POSITIONS = ["start", "end"] as const;
 export type IconPosition = (typeof ICON_POSITIONS)[number];
 
+/** Vertical placement of the icon against the text block. */
+export const ICON_ALIGNMENTS = ["center", "top"] as const;
+export type IconAlignment = (typeof ICON_ALIGNMENTS)[number];
+
 /** `none` renders a bare coloured glyph with no background shape. */
 export const ICON_SHAPES = ["circle", "square", "none"] as const;
 export type IconShape = (typeof ICON_SHAPES)[number];
