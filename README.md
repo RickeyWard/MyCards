@@ -46,7 +46,9 @@ tap_action:
 | `icon_shape`        | string  | `circle`     | `circle`, `square`, or `none` — a bare glyph, drawn at the shape's full size. |
 | `entity`            | string  | —            | Optional entity; drives the default icon and subtitle.                        |
 | `subtitle`          | string  | entity state | Static subtitle; overrides the entity state.                                  |
-| `title_size`        | number  | `16`         | Title size in px; the subtitle scales with it (81%).                          |
+| `title_size`        | number  | `16`         | Title size in px.                                                             |
+| `subtitle_scale`    | number  | `81`         | Subtitle size as a percentage of the title.                                   |
+| `subtitle_gap`      | number  | `0`          | Space between the title and the subtitle, in px.                              |
 | `icon_gap`          | number  | `12`         | Space between the icon and the text, in px.                                   |
 | `icon_size`         | number  | `40`         | Icon size in px; the glyph inside the shape scales with it (52.5%).           |
 | `icon_align`        | string  | `center`     | `center` or `top` — vertical placement against the text.                      |

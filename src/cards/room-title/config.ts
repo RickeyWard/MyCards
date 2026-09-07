@@ -25,6 +25,8 @@ export const roomTitleCardConfigStruct = assign(
     entity: optional(string()),
     subtitle: optional(string()),
     title_size: optional(number()),
+    subtitle_scale: optional(number()),
+    subtitle_gap: optional(number()),
     icon_gap: optional(number()),
     icon_size: optional(number()),
     icon_align: optional(enums(ICON_ALIGNMENTS)),

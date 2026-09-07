@@ -12,6 +12,8 @@
       "entity": "Entity",
       "subtitle": "Subtitle",
       "title_size": "Title size",
+      "subtitle_scale": "Subtitle size (% of title)",
+      "subtitle_gap": "Gap below the title",
       "icon_gap": "Gap between icon and text",
       "alignment": "Alignment",
       "appearance": "Appearance",

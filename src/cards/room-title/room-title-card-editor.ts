@@ -39,6 +39,18 @@ const SCHEMA: readonly HaFormSchema[] = [
     },
   },
   {
+    name: "subtitle_scale",
+    selector: {
+      number: { min: 40, max: 200, step: 5, unit_of_measurement: "%", mode: "slider" },
+    },
+  },
+  {
+    name: "subtitle_gap",
+    selector: {
+      number: { min: 0, max: 24, step: 1, unit_of_measurement: "px", mode: "slider" },
+    },
+  },
+  {
     name: "icon_size",
     selector: {
       number: { min: 12, max: 96, step: 1, unit_of_measurement: "px", mode: "slider" },

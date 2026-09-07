@@ -15,12 +15,6 @@ import { ROOM_TITLE_CARD_NAME, roomTitleCardConfigStruct } from "./config";
 import type { RoomTitleCardConfig } from "./config";
 
 /**
- * Subtitle size as a fraction of the title, matching the 13/16 default token
- * pair. Deriving it keeps the two in proportion at any title size.
- */
-const SUBTITLE_RATIO = 0.8125;
-
-/**
  * Glyph size as a fraction of the shape it sits in, matching the 21/40 default
  * token pair, so the icon keeps its padding inside the circle at any size.
  */
@@ -87,11 +81,12 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
     const iconSize = config.icon_size;
     const iconAtTop = (config.icon_align ?? "center") === "top";
     const containerStyle = {
-      ...(titleSize
-        ? {
-            "--title-font-size": `${titleSize}px`,
-            "--subtitle-font-size": `${Math.round(titleSize * SUBTITLE_RATIO * 10) / 10}px`,
-          }
+      ...(titleSize ? { "--title-font-size": `${titleSize}px` } : {}),
+      ...(config.subtitle_scale !== undefined
+        ? { "--subtitle-scale": `${config.subtitle_scale / 100}` }
+        : {}),
+      ...(config.subtitle_gap !== undefined
+        ? { "--subtitle-gap": `${config.subtitle_gap}px` }
         : {}),
       ...(config.icon_gap !== undefined ? { "--icon-gap": `${config.icon_gap}px` } : {}),
       ...(iconSize
@@ -234,6 +229,7 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
       .text {
         display: flex;
         flex-direction: column;
+        gap: var(--subtitle-gap);
         min-width: 0;
       }
       .title {
@@ -246,7 +242,7 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
         white-space: nowrap;
       }
       .subtitle {
-        font-size: var(--subtitle-font-size);
+        font-size: calc(var(--title-font-size) * var(--subtitle-scale));
         font-weight: var(--subtitle-font-weight);
         line-height: 1.3;
         color: var(--secondary-text-color);

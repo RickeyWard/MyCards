@@ -17,7 +17,10 @@ export const themeVariables = css`
     --icon-bare-symbol-size: var(--mycards-icon-bare-symbol-size, var(--icon-size));
     --title-font-size: var(--mycards-title-font-size, 16px);
     --title-font-weight: var(--mycards-title-font-weight, 500);
-    --subtitle-font-size: var(--mycards-subtitle-font-size, 13px);
+    /* A ratio, not a size: resolved against the title where it is used, so it
+       follows a per-card title size instead of stranding at a fixed px. */
+    --subtitle-scale: var(--mycards-subtitle-scale, 0.8125);
+    --subtitle-gap: var(--mycards-subtitle-gap, 0px);
     --subtitle-font-weight: var(--mycards-subtitle-font-weight, 400);
   }
 `;

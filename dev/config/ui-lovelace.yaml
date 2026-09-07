@@ -97,6 +97,22 @@ views:
         subtitle: Two lines, icon aligned with the first
 
       - type: custom:mycards-room-title-card
+        name: Loud subtitle
+        icon: mdi:thermometer
+        icon_color: red
+        title_size: 18
+        subtitle_scale: 110
+        subtitle_gap: 6
+        entity: sensor.living_room_temperature
+
+      - type: custom:mycards-room-title-card
+        name: Quiet subtitle
+        icon: mdi:water-percent
+        icon_color: light-blue
+        subtitle_scale: 60
+        subtitle: Small print
+
+      - type: custom:mycards-room-title-card
         name: Centered with subtitle
         icon: mdi:home-heart
         icon_color: pink
