@@ -14,6 +14,12 @@ import { registerCard } from "../../utils/register-card";
 import { ROOM_TITLE_CARD_NAME, roomTitleCardConfigStruct } from "./config";
 import type { RoomTitleCardConfig } from "./config";
 
+/**
+ * Subtitle size as a fraction of the title, matching the 13/16 default token
+ * pair. Deriving it keeps the two in proportion at any title size.
+ */
+const SUBTITLE_RATIO = 0.8125;
+
 const CARD_TYPE = cardType(ROOM_TITLE_CARD_NAME);
 const EDITOR_TYPE = editorType(ROOM_TITLE_CARD_NAME);
 
@@ -71,6 +77,13 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
       "--icon-color": `rgb(${computeRgbColor(config.icon_color ?? "primary")})`,
       "--icon-background": `rgba(${computeRgbColor(config.icon_color ?? "primary")}, 0.2)`,
     };
+    const titleSize = config.title_size;
+    const textStyle = titleSize
+      ? {
+          "--title-font-size": `${titleSize}px`,
+          "--subtitle-font-size": `${Math.round(titleSize * SUBTITLE_RATIO * 10) / 10}px`,
+        }
+      : {};
 
     return html`
       <ha-card
@@ -90,6 +103,7 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
             "icon-end": iconAtEnd,
             [`align-${alignment}`]: true,
           })}
+          style=${styleMap(textStyle)}
         >
           ${
             config.hide_icon

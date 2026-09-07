@@ -1,4 +1,4 @@
-import { assign, boolean, enums, object, optional, string } from "superstruct";
+import { assign, boolean, enums, number, object, optional, string } from "superstruct";
 import type { Infer } from "superstruct";
 import type { LovelaceCardConfig } from "../../ha";
 import {
@@ -23,6 +23,7 @@ export const roomTitleCardConfigStruct = assign(
     icon_shape: optional(enums(ICON_SHAPES)),
     entity: optional(string()),
     subtitle: optional(string()),
+    title_size: optional(number()),
     alignment: optional(enums(ALIGNMENTS)),
     hide_icon: optional(boolean()),
     tap_action: optional(actionConfigStruct),

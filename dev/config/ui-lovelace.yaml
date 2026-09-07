@@ -43,6 +43,21 @@ views:
         subtitle: Subtitle hangs off the same edge
 
       - type: custom:mycards-room-title-card
+        name: Big title
+        icon: mdi:sofa
+        icon_color: indigo
+        title_size: 28
+        entity: sensor.living_room_temperature
+
+      - type: custom:mycards-room-title-card
+        name: Small title
+        icon: mdi:chevron-right
+        icon_color: grey
+        icon_shape: none
+        title_size: 12
+        subtitle: Subtitle follows the title
+
+      - type: custom:mycards-room-title-card
         name: Centered with subtitle
         icon: mdi:home-heart
         icon_color: pink

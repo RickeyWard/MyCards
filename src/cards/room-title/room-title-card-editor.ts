@@ -33,6 +33,12 @@ const SCHEMA: readonly HaFormSchema[] = [
   },
   { name: "subtitle", selector: { text: {} } },
   {
+    name: "title_size",
+    selector: {
+      number: { min: 8, max: 64, step: 1, unit_of_measurement: "px", mode: "slider" },
+    },
+  },
+  {
     type: "grid",
     name: "",
     schema: [
