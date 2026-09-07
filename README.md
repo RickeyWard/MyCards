@@ -67,8 +67,10 @@ npm run dev        # build, start HA on :8123, onboard it, then watch for change
 Open <http://localhost:8123>. No wizard, no login screen — [dev/scripts/onboard.mjs](dev/scripts/onboard.mjs)
 drives HA's onboarding API to create a `dev` / `dev` owner account, and the `trusted_networks`
 auth provider in [dev/config/configuration.yaml](dev/config/configuration.yaml) signs you in
-automatically. You land on the YAML dashboard defined in
-[dev/config/ui-lovelace.yaml](dev/config/ui-lovelace.yaml).
+automatically. You land on the dashboard defined in
+[dev/config/ui-lovelace.yaml](dev/config/ui-lovelace.yaml) — HA labels it **Overview** in the
+sidebar (that name is fixed for the default dashboard, even in YAML mode); the view inside it
+is titled _Cards_, at <http://localhost:8123/lovelace/cards>.
 
 > This instance has effectively no authentication. It is for local card development on a
 > throwaway config — never expose it, and never reuse this config for a real install.
