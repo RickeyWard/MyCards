@@ -1,4 +1,5 @@
 import { LitElement, css, html, nothing } from "lit";
+import { classMap } from "lit/directives/class-map.js";
 import type { TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { assert } from "superstruct";
@@ -11,6 +12,8 @@ import { setupCustomLocalize } from "../../utils/localize";
 import { loadHaComponents } from "../../utils/loader";
 import { ROOM_TITLE_CARD_NAME, roomTitleCardConfigStruct } from "./config";
 import type { RoomTitleCardConfig } from "./config";
+import { PRESETS, applyPreset, matchesPreset } from "./presets";
+import type { CardPreset } from "./presets";
 
 const SCHEMA: readonly HaFormSchema[] = [
   { name: "area", selector: { area: {} } },
@@ -150,10 +153,45 @@ export class RoomTitleCardEditor extends LitElement implements LovelaceCardEdito
     fireEvent(this, "config-changed", { config: ev.detail.value });
   }
 
+  private _presetLabel(preset: CardPreset): string {
+    const localize = setupCustomLocalize(this.hass);
+    const key = `editor.card.room_title.presets.${preset.key}`;
+    const label = localize(key);
+    return label === key ? preset.label : label;
+  }
+
+  private _applyPreset(preset: CardPreset): void {
+    if (!this._config) return;
+    fireEvent(this, "config-changed", { config: applyPreset(this._config, preset) });
+  }
+
+  private _renderPresets(config: RoomTitleCardConfig): TemplateResult {
+    const localize = setupCustomLocalize(this.hass);
+    return html`
+      <div class="presets">
+        <span class="presets-label">${localize("editor.common.presets")}</span>
+        <div class="presets-buttons">
+          ${PRESETS.map(
+            (preset) => html`
+              <button
+                type="button"
+                class=${classMap({ preset: true, active: matchesPreset(config, preset) })}
+                @click=${() => this._applyPreset(preset)}
+              >
+                ${this._presetLabel(preset)}
+              </button>
+            `,
+          )}
+        </div>
+      </div>
+    `;
+  }
+
   protected override render(): TemplateResult | typeof nothing {
     if (!this.hass || !this._config) return nothing;
 
     return html`
+      ${this._renderPresets(this._config)}
       <ha-form
         .hass=${this.hass}
         .data=${this._config}
@@ -167,6 +205,39 @@ export class RoomTitleCardEditor extends LitElement implements LovelaceCardEdito
   static override styles = css`
     ha-form {
       display: block;
+    }
+    .presets {
+      margin-bottom: 16px;
+    }
+    .presets-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 12px;
+      color: var(--secondary-text-color);
+    }
+    .presets-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    /* Plain buttons rather than an ha-* control: card editors load lazily and
+       this row must render even if the frontend has not defined one yet. */
+    .preset {
+      padding: 6px 14px;
+      border: 1px solid var(--divider-color);
+      border-radius: 18px;
+      background: var(--card-background-color);
+      color: var(--primary-text-color);
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .preset:hover {
+      background: var(--secondary-background-color);
+    }
+    .preset.active {
+      border-color: var(--primary-color);
+      color: var(--primary-color);
     }
   `;
 }

@@ -71,6 +71,22 @@ sensors. The card also works with no area at all — set `name`, `icon` and `ent
 | `hold_action`       | action  | `none`       | Standard HA action config.                                                    |
 | `double_tap_action` | action  | `none`       | Standard HA action config.                                                    |
 
+### Presets
+
+The UI editor opens with a row of preset buttons — **Default**, **Simple Right**, **Compact**,
+**Hero** — that set the card's whole look in one click. The active one is highlighted.
+
+A preset replaces every appearance value rather than merging into what is there, so switching
+between two presets always lands on the same result instead of leaving the previous one's icon
+size or gap behind. It never touches what the card _is_: `area`, `name`, `entity`, `icon`,
+`subtitle` and the actions all survive, so clicking a preset on a Kitchen card leaves it a
+Kitchen card.
+
+Presets live in [src/cards/room-title/presets.ts](src/cards/room-title/presets.ts). Add one by
+appending to `PRESETS`; the label falls back to the `label` field unless
+`editor.card.room_title.presets.<key>` exists in the translations. To let presets control a
+key they currently preserve — the icon, say — remove it from `IDENTITY_KEYS` in the same file.
+
 The card is fully configurable from the UI editor.
 
 ## Development

@@ -20,12 +20,19 @@
       "alignment": "Alignment",
       "appearance": "Appearance",
       "interactions": "Interactions",
+      "presets": "Presets",
       "tap_action": "Tap action",
       "hold_action": "Hold action",
       "double_tap_action": "Double tap action"
     },
     "card": {
       "room_title": {
+        "presets": {
+          "default": "Default",
+          "simple_right": "Simple Right",
+          "compact": "Compact",
+          "hero": "Hero"
+        },
         "name": "Room Title",
         "description": "A heading for a room section, with an optional icon and status line.",
         "subtitle": "Subtitle (overrides the entity state)"

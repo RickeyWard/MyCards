@@ -102,6 +102,13 @@ npm run build
 Then reload the dashboard and check the card appears in the "Add card" picker, its UI editor
 opens, and a YAML-only config with an unknown key is rejected with a readable error.
 
+## Presets
+
+If a card has more than a handful of appearance options, give it a `presets.ts` next to the
+editor: an `IDENTITY_KEYS` list of what a preset must not touch, and a `PRESETS` array of
+complete looks. Apply them by replacing the whole appearance rather than merging, so two
+clicks always produce the same card. `room-title` is the worked example.
+
 ## Adding translations
 
 Add strings under `src/translations/en.json`, then look them up with
