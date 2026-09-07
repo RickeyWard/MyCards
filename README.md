@@ -95,6 +95,10 @@ The loop from there:
 - **Dashboard change** → edit `dev/config/ui-lovelace.yaml` → reload. No HA restart needed.
 - **HA config change** (new test entities) → restart the container, or Developer tools →
   YAML → _Reload template entities_.
+- **Areas** live in the entity and area registries, not in YAML, so they cannot be checked in
+  as config. [dev/scripts/seed.mjs](dev/scripts/seed.mjs) declares them and reapplies them on
+  every `dev:up`; add to its `AREAS` map rather than clicking through the UI, or a reset loses
+  the assignment.
 
 Add a case to `ui-lovelace.yaml` for every state a card can be in — unavailable entity, no
 entity, long text, no icon. It is the closest thing the suite has to a test suite.

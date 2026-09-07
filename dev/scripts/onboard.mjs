@@ -6,14 +6,19 @@
  * Idempotent: exits quietly if onboarding is already done.
  */
 
-const BASE = process.env.HA_URL ?? "http://localhost:8123";
-const CLIENT_ID = `${BASE}/`;
-const USERNAME = process.env.HA_USER ?? "dev";
-const PASSWORD = process.env.HA_PASSWORD ?? "dev";
+import {
+  BASE,
+  CLIENT_ID,
+  PASSWORD,
+  USERNAME,
+  exchangeCode,
+  getAccessToken,
+  postJson,
+  sleep,
+} from "./lib/ha.mjs";
+
 const NAME = "Dev";
 const BOOT_TIMEOUT_MS = 180_000;
-
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function waitForApi() {
   const deadline = Date.now() + BOOT_TIMEOUT_MS;
@@ -22,6 +27,9 @@ async function waitForApi() {
     try {
       const res = await fetch(`${BASE}/api/onboarding`, { signal: AbortSignal.timeout(5000) });
       if (res.ok) return res.json();
+      // HA unregisters the onboarding views once it is done, so a 404 here
+      // means there is nothing left to do -- not that it is still booting.
+      if (res.status === 404) return null;
       lastError = `HTTP ${res.status}`;
     } catch (err) {
       lastError = err.message;
@@ -31,57 +39,9 @@ async function waitForApi() {
   throw new Error(`Home Assistant did not answer within ${BOOT_TIMEOUT_MS / 1000}s: ${lastError}`);
 }
 
-async function postJson(path, body, token) {
-  const res = await fetch(`${BASE}${path}`, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      ...(token ? { authorization: `Bearer ${token}` } : {}),
-    },
-    body: JSON.stringify(body ?? {}),
-  });
-  const text = await res.text();
-  if (!res.ok) {
-    throw new Error(`POST ${path} -> ${res.status} ${text}`);
-  }
-  return text ? JSON.parse(text) : {};
-}
-
-async function exchangeCode(code) {
-  const res = await fetch(`${BASE}/auth/token`, {
-    method: "POST",
-    headers: { "content-type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({
-      grant_type: "authorization_code",
-      code,
-      client_id: CLIENT_ID,
-    }),
-  });
-  if (!res.ok) throw new Error(`token exchange -> ${res.status} ${await res.text()}`);
-  return (await res.json()).access_token;
-}
-
-async function login() {
-  const flow = await postJson("/auth/login_flow", {
-    client_id: CLIENT_ID,
-    handler: ["homeassistant", null],
-    redirect_uri: CLIENT_ID,
-    type: "authorize",
-  });
-  const result = await postJson(`/auth/login_flow/${flow.flow_id}`, {
-    client_id: CLIENT_ID,
-    username: USERNAME,
-    password: PASSWORD,
-  });
-  if (result.type !== "create_entry") {
-    throw new Error(`login did not complete: ${JSON.stringify(result)}`);
-  }
-  return exchangeCode(result.result);
-}
-
 async function main() {
   const steps = await waitForApi();
-  const pending = new Set(steps.filter((s) => !s.done).map((s) => s.step));
+  const pending = new Set((steps ?? []).filter((s) => !s.done).map((s) => s.step));
 
   if (pending.size === 0) {
     console.log(`Onboarding already complete. Sign in at ${BASE} as ${USERNAME} / ${PASSWORD}`);
@@ -104,7 +64,7 @@ async function main() {
 
   if (!token) {
     // A partly onboarded instance already has the account; sign in to finish.
-    token = await login();
+    token = await getAccessToken();
   }
 
   // Remaining steps just need to be marked done; the values come from
