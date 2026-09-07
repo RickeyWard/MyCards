@@ -13,6 +13,7 @@ import { ROOM_TITLE_CARD_NAME, roomTitleCardConfigStruct } from "./config";
 import type { RoomTitleCardConfig } from "./config";
 
 const SCHEMA: readonly HaFormSchema[] = [
+  { name: "area", selector: { area: {} } },
   { name: "name", selector: { text: {} } },
   { name: "entity", selector: { entity: {} } },
   {

@@ -28,24 +28,36 @@ lives in its own folder, shares a common base class and theme tokens, and ships 
 
 ```yaml
 type: custom:mycards-room-title-card
-name: Living Room
-icon: mdi:sofa
+area: living_room
 icon_color: blue
-entity: light.living_room
 tap_action:
   action: navigate
   navigation_path: /lovelace/living-room
 ```
 
+Given an area, the card titles itself with the area name, takes the area's icon, and shows
+that area's temperature and humidity as the status line. Every part of that is overridable:
+
+| Want                        | Set        |
+| --------------------------- | ---------- |
+| A different title           | `name`     |
+| A different icon            | `icon`     |
+| One specific entity's state | `entity`   |
+| Fixed status text           | `subtitle` |
+
+The status line resolves in that order: `subtitle`, then `entity`, then the area's climate
+sensors. The card also works with no area at all — set `name`, `icon` and `entity` yourself.
+
 | Option              | Type    | Default      | Description                                                                   |
 | ------------------- | ------- | ------------ | ----------------------------------------------------------------------------- |
-| `name`              | string  | entity name  | Title text.                                                                   |
-| `icon`              | string  | entity icon  | Any `mdi:` icon.                                                              |
+| `area`              | string  | —            | Area id. Supplies the title, icon and status line.                            |
+| `name`              | string  | area name    | Title text; overrides the area name.                                          |
+| `icon`              | string  | area icon    | Any `mdi:` icon.                                                              |
 | `icon_color`        | string  | `primary`    | Theme colour token (`blue`, `red`, …) or any CSS colour.                      |
 | `icon_position`     | string  | `start`      | `start` or `end` — which side of the text the icon sits on.                   |
 | `icon_shape`        | string  | `circle`     | `circle`, `square`, or `none` — a bare glyph, drawn at the shape's full size. |
-| `entity`            | string  | —            | Optional entity; drives the default icon and subtitle.                        |
-| `subtitle`          | string  | entity state | Static subtitle; overrides the entity state.                                  |
+| `entity`            | string  | —            | Show one entity's state instead of the area's sensors.                        |
+| `subtitle`          | string  | area climate | Fixed status text; overrides everything below it.                             |
 | `title_size`        | number  | `16`         | Title size in px.                                                             |
 | `subtitle_scale`    | number  | `81`         | Subtitle size as a percentage of the title.                                   |
 | `subtitle_gap`      | number  | `0`          | Space between the title and the subtitle, in px.                              |

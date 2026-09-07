@@ -13,6 +13,11 @@ import { connect, getAccessToken } from "./lib/ha.mjs";
 /** area name -> entities that belong to it */
 const AREAS = {
   Kitchen: ["sensor.kitchen_temperature"],
+  "Living Room": [
+    "sensor.living_room_temperature",
+    "sensor.living_room_humidity",
+    "light.living_room",
+  ],
 };
 
 async function main() {

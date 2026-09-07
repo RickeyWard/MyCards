@@ -6,7 +6,6 @@
  */
 export type {
   ActionConfig,
-  HomeAssistant,
   LovelaceCard,
   LovelaceCardConfig,
   LovelaceCardEditor,
@@ -31,3 +30,4 @@ export {
 export type { HassEntity } from "home-assistant-js-websocket";
 
 export * from "./form";
+export * from "./types";

@@ -1,7 +1,8 @@
 {
   "editor": {
     "common": {
-      "name": "Name",
+      "area": "Area",
+      "name": "Name (overrides the area name)",
       "icon": "Icon",
       "icon_color": "Icon color",
       "icon_position": "Icon position",

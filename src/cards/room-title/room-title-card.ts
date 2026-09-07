@@ -5,10 +5,11 @@ import { classMap } from "lit/directives/class-map.js";
 import { styleMap } from "lit/directives/style-map.js";
 import { assert } from "superstruct";
 import { cardType, editorType } from "../../const";
-import type { HomeAssistant, LovelaceCardEditor } from "../../ha";
+import type { HassEntity, HomeAssistant, LovelaceCardEditor } from "../../ha";
 import { BaseCard } from "../../shared/base-card";
 import { computeRgbColor } from "../../shared/colors";
 import { actionHandler } from "../../utils/action-handler";
+import { areaSensor, getArea } from "../../utils/area";
 import { formatEntityState, isAvailable } from "../../utils/entity";
 import { registerCard } from "../../utils/register-card";
 import { ROOM_TITLE_CARD_NAME, roomTitleCardConfigStruct } from "./config";
@@ -37,6 +38,13 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
   }
 
   public static getStubConfig(hass: HomeAssistant): RoomTitleCardConfig {
+    // An area drives name, icon and status line on its own, so it makes the
+    // better first impression when the card is dropped on a dashboard.
+    const areaId = Object.keys(hass.areas ?? {})[0];
+    if (areaId) {
+      return { type: `custom:${CARD_TYPE}`, area: areaId, icon_color: "blue" };
+    }
+
     const entity = Object.keys(hass.states).find((id) => id.startsWith("light."));
     return {
       type: `custom:${CARD_TYPE}`,
@@ -52,13 +60,31 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
     super.setConfig(config);
   }
 
+  /**
+   * Explicit text wins, then an explicitly chosen entity, then the climate
+   * readings of the area. Each step is a deliberate override of the one below.
+   */
   private get _subtitle(): string | undefined {
     const config = this._config;
-    if (!config) return undefined;
+    const hass = this.hass;
+    if (!config || !hass) return undefined;
+
     if (config.subtitle) return config.subtitle;
-    if (!config.entity || !this.hass) return undefined;
-    const stateObj = this.hass.states[config.entity];
-    return stateObj ? formatEntityState(this.hass, stateObj) : undefined;
+
+    if (config.entity) {
+      const stateObj = hass.states[config.entity];
+      return stateObj ? formatEntityState(hass, stateObj) : undefined;
+    }
+
+    const area = getArea(hass, config.area);
+    if (!area) return undefined;
+
+    const readings = (["temperature", "humidity"] as const)
+      .map((deviceClass) => areaSensor(hass, area, deviceClass))
+      .filter((stateObj): stateObj is HassEntity => stateObj !== undefined)
+      .map((stateObj) => formatEntityState(hass, stateObj));
+
+    return readings.length ? readings.join(" · ") : undefined;
   }
 
   protected override render(): TemplateResult | typeof nothing {
@@ -67,7 +93,9 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
 
     const stateObj = config.entity ? this.hass.states[config.entity] : undefined;
     const unavailable = !!config.entity && !isAvailable(stateObj);
-    const name = config.name ?? stateObj?.attributes.friendly_name ?? "";
+    const area = getArea(this.hass, config.area);
+    const name = config.name ?? area?.name ?? stateObj?.attributes.friendly_name ?? "";
+    const icon = config.icon ?? area?.icon ?? undefined;
     const subtitle = this._subtitle;
     const interactive = this.hasInteraction;
     const iconAtEnd = (config.icon_position ?? "start") === "end";
@@ -134,9 +162,9 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
                         ? html`<ha-state-icon
                             .hass=${this.hass}
                             .stateObj=${stateObj}
-                            .icon=${config.icon}
+                            .icon=${icon}
                           ></ha-state-icon>`
-                        : html`<ha-icon .icon=${config.icon ?? "mdi:home-outline"}></ha-icon>`
+                        : html`<ha-icon .icon=${icon ?? "mdi:home-outline"}></ha-icon>`
                     }
                   </div>
                 `

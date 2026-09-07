@@ -77,6 +77,12 @@ template:
         device_class: temperature
         state: "72.4"
 
+      - name: Living Room Humidity
+        unique_id: dev_living_room_humidity
+        unit_of_measurement: "%"
+        device_class: humidity
+        state: "44"
+
       - name: Kitchen Temperature
         unique_id: dev_kitchen_temperature
         unit_of_measurement: "°F"

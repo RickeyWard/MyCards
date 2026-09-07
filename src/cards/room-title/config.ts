@@ -17,6 +17,7 @@ export const ROOM_TITLE_CARD_NAME = "room-title";
 export const roomTitleCardConfigStruct = assign(
   baseCardConfigStruct,
   object({
+    area: optional(string()),
     name: optional(string()),
     icon: optional(string()),
     icon_color: optional(string()),

@@ -5,6 +5,31 @@ views:
   - title: Cards
     path: cards
     cards:
+      # Area mode: name, icon and status line all come from the area.
+      - type: custom:mycards-room-title-card
+        area: living_room
+
+      - type: custom:mycards-room-title-card
+        area: kitchen
+        icon: mdi:countertop
+        icon_color: amber
+
+      - type: custom:mycards-room-title-card
+        area: living_room
+        name: Renamed area
+        icon_color: green
+
+      - type: custom:mycards-room-title-card
+        area: living_room
+        name: Area with a chosen entity
+        entity: light.living_room
+        icon_color: purple
+
+      - type: custom:mycards-room-title-card
+        area: bedroom
+        name: Area with no sensors
+        icon_color: grey
+
       - type: custom:mycards-room-title-card
         name: Living Room
         icon: mdi:sofa
