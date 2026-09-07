@@ -173,12 +173,17 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
       .icon.shape-square {
         border-radius: var(--icon-square-border-radius);
       }
-      /* Bare glyph: keep the colour, drop the shape and its padding. */
+      /* Bare glyph: keep the colour, drop the shape and its padding. The row
+         keeps its height so swapping shapes does not resize the card. */
       .icon.shape-none {
         width: auto;
-        height: auto;
+        height: var(--icon-size);
         border-radius: 0;
         background-color: transparent;
+      }
+      .icon.shape-none ha-icon,
+      .icon.shape-none ha-state-icon {
+        --mdc-icon-size: var(--icon-bare-symbol-size);
       }
       .icon ha-icon,
       .icon ha-state-icon {

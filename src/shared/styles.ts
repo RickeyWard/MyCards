@@ -11,6 +11,9 @@ export const themeVariables = css`
     --icon-border-radius: var(--mycards-icon-border-radius, 50%);
     --icon-square-border-radius: var(--mycards-icon-square-border-radius, 12px);
     --icon-symbol-size: var(--mycards-icon-symbol-size, 21px);
+    /* Shapeless icons have no background to sit inside, so the glyph itself
+       takes the footprint the shape would have had. */
+    --icon-bare-symbol-size: var(--mycards-icon-bare-symbol-size, var(--icon-size));
     --title-font-size: var(--mycards-title-font-size, 16px);
     --title-font-weight: var(--mycards-title-font-weight, 500);
     --subtitle-font-size: var(--mycards-subtitle-font-size, 13px);
