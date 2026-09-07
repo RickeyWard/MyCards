@@ -32,6 +32,7 @@ export const roomTitleCardConfigStruct = assign(
     icon_align: optional(enums(ICON_ALIGNMENTS)),
     alignment: optional(enums(ALIGNMENTS)),
     hide_icon: optional(boolean()),
+    transparent: optional(boolean()),
     tap_action: optional(actionConfigStruct),
     hold_action: optional(actionConfigStruct),
     double_tap_action: optional(actionConfigStruct),

@@ -103,6 +103,7 @@ const SCHEMA: readonly HaFormSchema[] = [
         },
       },
       { name: "hide_icon", selector: { boolean: {} } },
+      { name: "transparent", selector: { boolean: {} } },
     ],
   },
   {

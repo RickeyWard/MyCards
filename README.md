@@ -54,6 +54,7 @@ tap_action:
 | `icon_align`        | string  | `center`     | `center` or `top` — vertical placement against the text.                      |
 | `alignment`         | string  | `start`      | `start`, `center` or `end`; the title and subtitle follow it.                 |
 | `hide_icon`         | boolean | `false`      | Render title only.                                                            |
+| `transparent`       | boolean | `false`      | Drop the card background, border and shadow.                                  |
 | `tap_action`        | action  | `none`       | Standard HA action config.                                                    |
 | `hold_action`       | action  | `none`       | Standard HA action config.                                                    |
 | `double_tap_action` | action  | `none`       | Standard HA action config.                                                    |

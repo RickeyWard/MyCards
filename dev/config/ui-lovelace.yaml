@@ -113,6 +113,13 @@ views:
         subtitle: Small print
 
       - type: custom:mycards-room-title-card
+        name: Transparent heading
+        icon: mdi:format-title
+        icon_color: purple
+        transparent: true
+        subtitle: No card behind it
+
+      - type: custom:mycards-room-title-card
         name: Centered with subtitle
         icon: mdi:home-heart
         icon_color: pink

@@ -102,7 +102,7 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
 
     return html`
       <ha-card
-        class=${classMap({ interactive, unavailable })}
+        class=${classMap({ interactive, unavailable, transparent: !!config.transparent })}
         role=${interactive ? "button" : "heading"}
         tabindex=${interactive ? "0" : "-1"}
         .actionHandler=${actionHandler({
@@ -157,6 +157,13 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
         background: var(--mycards-room-title-background, var(--ha-card-background, none));
         border: var(--mycards-room-title-border, none);
         box-shadow: var(--mycards-room-title-box-shadow, none);
+      }
+      /* Sits directly on the view background, for use as a section heading
+         above other cards rather than as a card in its own right. */
+      ha-card.transparent {
+        background: transparent;
+        border: none;
+        box-shadow: none;
       }
       .container {
         display: flex;
