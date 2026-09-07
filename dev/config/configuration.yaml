@@ -1,0 +1,80 @@
+# Minimal Home Assistant config for card development.
+# Deliberately lean: no default_config, so startup is fast and nothing
+# tries to discover devices on your LAN.
+
+homeassistant:
+  name: MyCards Dev
+  latitude: 0
+  longitude: 0
+  elevation: 0
+  unit_system: us_customary
+  currency: USD
+  country: US
+  time_zone: America/New_York
+
+frontend:
+config:
+history:
+logbook:
+system_health:
+
+# YAML lovelace mode: resources load without clicking through the UI, and the
+# default dashboard is ui-lovelace.yaml (edit + reload browser to iterate).
+# Dashboards you create later in the UI are storage mode and still see these
+# resources -- that is where you test the visual card editor.
+lovelace:
+  mode: yaml
+  resources:
+    - url: /local/mycards/mycards.js
+      type: module
+
+logger:
+  default: warning
+
+# --- Test entities -----------------------------------------------------------
+# Deterministic states so card rendering is reproducible. For a full zoo of
+# entities, add the "Demo" integration from Settings > Devices & Services.
+
+input_boolean:
+  living_room_lights:
+    name: Living Room Lights
+    icon: mdi:lightbulb-group
+
+template:
+  - light:
+      - name: Living Room
+        unique_id: dev_living_room_light
+        state: "{{ is_state('input_boolean.living_room_lights', 'on') }}"
+        turn_on:
+          service: input_boolean.turn_on
+          target:
+            entity_id: input_boolean.living_room_lights
+        turn_off:
+          service: input_boolean.turn_off
+          target:
+            entity_id: input_boolean.living_room_lights
+
+  - sensor:
+      - name: Living Room Temperature
+        unique_id: dev_living_room_temperature
+        unit_of_measurement: "°F"
+        device_class: temperature
+        state: "72.4"
+
+      - name: Kitchen Temperature
+        unique_id: dev_kitchen_temperature
+        unit_of_measurement: "°F"
+        device_class: temperature
+        state: "69.1"
+
+  - binary_sensor:
+      - name: Front Door
+        unique_id: dev_front_door
+        device_class: door
+        state: "off"
+
+  # An always-unavailable entity, to check the unavailable styling.
+  - sensor:
+      - name: Broken Sensor
+        unique_id: dev_broken_sensor
+        state: "unavailable"

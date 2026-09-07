@@ -10,3 +10,8 @@ Thumbs.db
 *.tsbuildinfo
 .env
 .env.*
+
+# Home Assistant dev instance runtime state (config files themselves are tracked)
+dev/config/*
+!dev/config/configuration.yaml
+!dev/config/ui-lovelace.yaml

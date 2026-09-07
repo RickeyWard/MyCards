@@ -54,22 +54,57 @@ The card is fully configurable from the UI editor.
 
 ## Development
 
+### Run a throwaway Home Assistant
+
+The repo ships a disposable HA instance under [dev/](dev/): a container with `dist/` mounted
+at `/local/mycards/`, the resource pre-registered, and a handful of deterministic test
+entities. Requires Docker.
+
 ```bash
-npm install
-npm run watch      # rebuilds dist/mycards.js on every change
+npm run dev        # build, start HA on :8123, then watch for changes
 ```
 
-Point Home Assistant at the local build once:
+Open <http://localhost:8123>, create the local account once (onboarding is unavoidable), and
+you land on the YAML dashboard defined in [dev/config/ui-lovelace.yaml](dev/config/ui-lovelace.yaml).
+
+The loop from there:
+
+- **Card source change** → `npm run watch` rebuilds `dist/mycards.js` → hard-reload the
+  browser (`Ctrl+Shift+R`). Keep DevTools open with _Disable cache_ ticked; HA caches
+  dashboard resources aggressively.
+- **Dashboard change** → edit `dev/config/ui-lovelace.yaml` → reload. No HA restart needed.
+- **HA config change** (new test entities) → restart the container, or Developer tools →
+  YAML → _Reload template entities_.
+
+Add a case to `ui-lovelace.yaml` for every state a card can be in — unavailable entity, no
+entity, long text, no icon. It is the closest thing the suite has to a test suite.
+
+To exercise the **visual editor** and the "Add card" picker, create a second dashboard in the
+UI (Settings → Dashboards → Add dashboard). Those are storage mode and still see the
+resource declared in YAML.
+
+For a richer entity set, add the **Demo** integration from Settings → Devices & Services.
+
+| Script              | Purpose                                                  |
+| ------------------- | -------------------------------------------------------- |
+| `npm run dev`       | `dev:up`, then watch.                                    |
+| `npm run dev:up`    | Build and start the HA container.                        |
+| `npm run dev:down`  | Stop it (config and account survive).                    |
+| `npm run dev:logs`  | Tail the HA log — where card-side YAML errors surface.   |
+| `npm run dev:reset` | Stop and wipe the instance state for a clean onboarding. |
+
+### Against your real Home Assistant
 
 ```bash
+npm run watch
 # from the HA config directory
 ln -s /path/to/this/repo/dist/mycards.js www/mycards.js
 ```
 
-then register `/local/mycards.js?v=dev` as a JavaScript module resource. Append a changing
-`?v=` (or hard-reload) to bust the browser cache after a rebuild.
+Then register `/local/mycards.js?v=dev` as a JavaScript module resource, bumping `?v=` to
+bust the cache.
 
-Other scripts:
+### Other scripts
 
 | Script              | Purpose                        |
 | ------------------- | ------------------------------ |
@@ -91,6 +126,8 @@ src/
   cards/
     index.ts              card registry
     room-title/           one folder per card: config + card + editor
+dev/                      disposable Home Assistant instance for manual testing
+docs/
 ```
 
 ## Adding a card

@@ -88,14 +88,14 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
               : html`
                   <div class="icon" style=${styleMap(iconStyle)}>
                     ${
-                    stateObj
-                      ? html`<ha-state-icon
-                          .hass=${this.hass}
-                          .stateObj=${stateObj}
-                          .icon=${config.icon}
-                        ></ha-state-icon>`
-                      : html`<ha-icon .icon=${config.icon ?? "mdi:home-outline"}></ha-icon>`
-                  }
+                      stateObj
+                        ? html`<ha-state-icon
+                            .hass=${this.hass}
+                            .stateObj=${stateObj}
+                            .icon=${config.icon}
+                          ></ha-state-icon>`
+                        : html`<ha-icon .icon=${config.icon ?? "mdi:home-outline"}></ha-icon>`
+                    }
                   </div>
                 `
           }

@@ -1,0 +1,17 @@
+name: mycards-dev
+
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: mycards-ha
+    ports:
+      - "8123:8123"
+    volumes:
+      # HA config lives in the repo so it is reproducible and disposable.
+      - ./config:/config
+      # The build output is served at /local/mycards/mycards.js.
+      # `npm run watch` rewrites it in place; just reload the browser.
+      - ../dist:/config/www/mycards:ro
+    environment:
+      TZ: ${TZ:-America/New_York}
+    restart: unless-stopped

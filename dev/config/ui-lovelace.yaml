@@ -1,0 +1,41 @@
+# Default dashboard (YAML mode): edit and reload the browser to iterate.
+# Every card in the suite should have a case here, including the ugly ones.
+
+views:
+  - title: Cards
+    path: cards
+    cards:
+      - type: custom:mycards-room-title-card
+        name: Living Room
+        icon: mdi:sofa
+        icon_color: blue
+        entity: light.living_room
+        tap_action:
+          action: toggle
+
+      - type: custom:mycards-room-title-card
+        name: Kitchen
+        icon: mdi:countertop
+        icon_color: amber
+        entity: sensor.kitchen_temperature
+
+      - type: custom:mycards-room-title-card
+        name: Centered, no icon
+        subtitle: Static subtitle
+        alignment: center
+        hide_icon: true
+
+      - type: custom:mycards-room-title-card
+        name: Unavailable entity
+        icon: mdi:alert
+        icon_color: red
+        entity: sensor.broken_sensor
+
+      - type: custom:mycards-room-title-card
+        entity: binary_sensor.front_door
+        icon_color: green
+        hold_action:
+          action: more-info
+        double_tap_action:
+          action: navigate
+          navigation_path: /lovelace/cards
