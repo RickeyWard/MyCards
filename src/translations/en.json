@@ -10,6 +10,7 @@
       "entity": "Entity",
       "subtitle": "Subtitle",
       "title_size": "Title size",
+      "icon_gap": "Gap between icon and text",
       "alignment": "Alignment",
       "appearance": "Appearance",
       "interactions": "Interactions",

@@ -58,6 +58,21 @@ views:
         subtitle: Subtitle follows the title
 
       - type: custom:mycards-room-title-card
+        name: Tight gap
+        icon: mdi:door
+        icon_color: cyan
+        icon_shape: none
+        icon_gap: 2
+        subtitle: Icon nearly touching the text
+
+      - type: custom:mycards-room-title-card
+        name: Wide gap
+        icon: mdi:sofa
+        icon_color: blue
+        icon_gap: 32
+        subtitle: Pushed well apart
+
+      - type: custom:mycards-room-title-card
         name: Centered with subtitle
         icon: mdi:home-heart
         icon_color: pink

@@ -78,12 +78,15 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
       "--icon-background": `rgba(${computeRgbColor(config.icon_color ?? "primary")}, 0.2)`,
     };
     const titleSize = config.title_size;
-    const textStyle = titleSize
-      ? {
-          "--title-font-size": `${titleSize}px`,
-          "--subtitle-font-size": `${Math.round(titleSize * SUBTITLE_RATIO * 10) / 10}px`,
-        }
-      : {};
+    const containerStyle = {
+      ...(titleSize
+        ? {
+            "--title-font-size": `${titleSize}px`,
+            "--subtitle-font-size": `${Math.round(titleSize * SUBTITLE_RATIO * 10) / 10}px`,
+          }
+        : {}),
+      ...(config.icon_gap !== undefined ? { "--icon-gap": `${config.icon_gap}px` } : {}),
+    };
 
     return html`
       <ha-card
@@ -103,7 +106,7 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
             "icon-end": iconAtEnd,
             [`align-${alignment}`]: true,
           })}
-          style=${styleMap(textStyle)}
+          style=${styleMap(containerStyle)}
         >
           ${
             config.hide_icon
@@ -145,7 +148,7 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
       .container {
         display: flex;
         align-items: center;
-        gap: var(--spacing);
+        gap: var(--icon-gap);
         padding: var(--spacing);
       }
       /*

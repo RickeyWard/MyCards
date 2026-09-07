@@ -7,6 +7,7 @@ import { css } from "lit";
 export const themeVariables = css`
   :host {
     --spacing: var(--mycards-spacing, 12px);
+    --icon-gap: var(--mycards-icon-gap, var(--spacing));
     --icon-size: var(--mycards-icon-size, 40px);
     --icon-border-radius: var(--mycards-icon-border-radius, 50%);
     --icon-square-border-radius: var(--mycards-icon-square-border-radius, 12px);
