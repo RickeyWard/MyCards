@@ -57,15 +57,21 @@ The card is fully configurable from the UI editor.
 ### Run a throwaway Home Assistant
 
 The repo ships a disposable HA instance under [dev/](dev/): a container with `dist/` mounted
-at `/local/mycards/`, the resource pre-registered, and a handful of deterministic test
-entities. Requires Docker.
+at `/local/mycards/`, the resource pre-registered, deterministic test entities, and onboarding
+completed for you. Requires Docker.
 
 ```bash
-npm run dev        # build, start HA on :8123, then watch for changes
+npm run dev        # build, start HA on :8123, onboard it, then watch for changes
 ```
 
-Open <http://localhost:8123>, create the local account once (onboarding is unavoidable), and
-you land on the YAML dashboard defined in [dev/config/ui-lovelace.yaml](dev/config/ui-lovelace.yaml).
+Open <http://localhost:8123>. No wizard, no login screen — [dev/scripts/onboard.mjs](dev/scripts/onboard.mjs)
+drives HA's onboarding API to create a `dev` / `dev` owner account, and the `trusted_networks`
+auth provider in [dev/config/configuration.yaml](dev/config/configuration.yaml) signs you in
+automatically. You land on the YAML dashboard defined in
+[dev/config/ui-lovelace.yaml](dev/config/ui-lovelace.yaml).
+
+> This instance has effectively no authentication. It is for local card development on a
+> throwaway config — never expose it, and never reuse this config for a real install.
 
 The loop from there:
 

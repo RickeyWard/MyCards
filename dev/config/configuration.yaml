@@ -11,6 +11,19 @@ homeassistant:
   currency: USD
   country: US
   time_zone: America/New_York
+  # Auto-login: any client on a private network is trusted and, since there is
+  # exactly one account, HA skips the login screen entirely.
+  # Dev-only. This instance has effectively no authentication -- do not expose it.
+  auth_providers:
+    - type: homeassistant
+    - type: trusted_networks
+      trusted_networks:
+        - 127.0.0.1
+        - ::1
+        - 10.0.0.0/8
+        - 172.16.0.0/12
+        - 192.168.0.0/16
+      allow_bypass_login: true
 
 frontend:
 config:
