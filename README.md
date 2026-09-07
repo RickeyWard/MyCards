@@ -46,7 +46,7 @@ tap_action:
 | `icon_shape`        | string  | `circle`     | `circle`, `square`, or `none` for a bare glyph with no coloured background. |
 | `entity`            | string  | —            | Optional entity; drives the default icon and subtitle.                      |
 | `subtitle`          | string  | entity state | Static subtitle; overrides the entity state.                                |
-| `alignment`         | string  | `start`      | `start`, `center` or `end`.                                                 |
+| `alignment`         | string  | `start`      | `start`, `center` or `end`; the title and subtitle follow it.               |
 | `hide_icon`         | boolean | `false`      | Render title only.                                                          |
 | `tap_action`        | action  | `none`       | Standard HA action config.                                                  |
 | `hold_action`       | action  | `none`       | Standard HA action config.                                                  |

@@ -40,6 +40,14 @@ views:
         icon_shape: square
         icon_position: end
         alignment: end
+        subtitle: Subtitle hangs off the same edge
+
+      - type: custom:mycards-room-title-card
+        name: Centered with subtitle
+        icon: mdi:home-heart
+        icon_color: pink
+        alignment: center
+        subtitle: Text centres too
 
       - type: custom:mycards-room-title-card
         name: Centered, no icon

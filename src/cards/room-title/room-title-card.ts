@@ -66,6 +66,7 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
     const interactive = this.hasInteraction;
     const iconAtEnd = (config.icon_position ?? "start") === "end";
     const iconShape = config.icon_shape ?? "circle";
+    const alignment = config.alignment ?? "start";
     const iconStyle = {
       "--icon-color": `rgb(${computeRgbColor(config.icon_color ?? "primary")})`,
       "--icon-background": `rgba(${computeRgbColor(config.icon_color ?? "primary")}, 0.2)`,
@@ -84,8 +85,11 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
         @action=${this._handleAction}
       >
         <div
-          class=${classMap({ container: true, "icon-end": iconAtEnd })}
-          style=${`justify-content: ${config.alignment ?? "start"}`}
+          class=${classMap({
+            container: true,
+            "icon-end": iconAtEnd,
+            [`align-${alignment}`]: true,
+          })}
         >
           ${
             config.hide_icon
@@ -129,6 +133,27 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
         align-items: center;
         gap: var(--spacing);
         padding: var(--spacing);
+      }
+      /*
+       * The text block follows the card alignment: with everything pushed to
+       * one edge, title and subtitle of different widths must agree on which
+       * edge they hang from, or the shorter one looks stranded.
+       * Uses the logical end keyword, so it stays correct under RTL.
+       */
+      .container.align-start {
+        justify-content: flex-start;
+      }
+      .container.align-center {
+        justify-content: center;
+      }
+      .container.align-center .text {
+        text-align: center;
+      }
+      .container.align-end {
+        justify-content: flex-end;
+      }
+      .container.align-end .text {
+        text-align: end;
       }
       .icon {
         flex: none;
