@@ -9,7 +9,30 @@ export const CLIENT_ID = `${BASE}/`;
 export const USERNAME = process.env.HA_USER ?? "dev";
 export const PASSWORD = process.env.HA_PASSWORD ?? "dev";
 
+export const ASSETS = process.env.HA_ASSETS_URL ?? "http://localhost:8099/mycards.js";
+
 export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * Printed at the end of `npm run dev:up`, just before the watch build takes
+ * over the terminal, so the address is the last thing on screen.
+ */
+export function printReady() {
+  const bold = (text) => `\u001b[1m${text}\u001b[0m`;
+  const dim = (text) => `\u001b[2m${text}\u001b[0m`;
+  const rows = [
+    ["Dashboard", `${BASE}/lovelace/cards`],
+    ["Home Assistant", BASE],
+    ["Sign-in", `automatic (${USERNAME} / ${PASSWORD})`],
+    ["Bundle", `${ASSETS} ${dim("(no-store, plain reload picks up rebuilds)")}`],
+  ];
+  const width = Math.max(...rows.map(([label]) => label.length));
+  console.log("");
+  for (const [label, value] of rows) {
+    console.log(`  ${dim(label.padEnd(width))}  ${label === "Dashboard" ? bold(value) : value}`);
+  }
+  console.log("");
+}
 
 export async function postJson(path, body, token) {
   const res = await fetch(`${BASE}${path}`, {

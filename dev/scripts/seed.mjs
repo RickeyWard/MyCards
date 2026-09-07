@@ -8,7 +8,7 @@
  * wiped instance gets the same areas back on the next `npm run dev:up`.
  */
 
-import { connect, getAccessToken } from "./lib/ha.mjs";
+import { connect, getAccessToken, printReady } from "./lib/ha.mjs";
 
 /** area name -> entities that belong to it */
 const AREAS = {
@@ -57,6 +57,8 @@ async function main() {
   } finally {
     ha.close();
   }
+
+  printReady();
 }
 
 main().catch((err) => {
