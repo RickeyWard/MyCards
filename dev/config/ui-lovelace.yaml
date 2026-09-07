@@ -73,6 +73,23 @@ views:
         subtitle: Pushed well apart
 
       - type: custom:mycards-room-title-card
+        name: Large icon and title
+        icon: mdi:sofa
+        icon_color: indigo
+        icon_size: 64
+        title_size: 28
+        subtitle: Both scaled together
+
+      - type: custom:mycards-room-title-card
+        name: Small bare icon
+        icon: mdi:chevron-right
+        icon_color: grey
+        icon_shape: none
+        icon_size: 18
+        title_size: 13
+        icon_gap: 4
+
+      - type: custom:mycards-room-title-card
         name: Centered with subtitle
         icon: mdi:home-heart
         icon_color: pink

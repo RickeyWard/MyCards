@@ -20,6 +20,12 @@ import type { RoomTitleCardConfig } from "./config";
  */
 const SUBTITLE_RATIO = 0.8125;
 
+/**
+ * Glyph size as a fraction of the shape it sits in, matching the 21/40 default
+ * token pair, so the icon keeps its padding inside the circle at any size.
+ */
+const SYMBOL_RATIO = 0.525;
+
 const CARD_TYPE = cardType(ROOM_TITLE_CARD_NAME);
 const EDITOR_TYPE = editorType(ROOM_TITLE_CARD_NAME);
 
@@ -78,6 +84,7 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
       "--icon-background": `rgba(${computeRgbColor(config.icon_color ?? "primary")}, 0.2)`,
     };
     const titleSize = config.title_size;
+    const iconSize = config.icon_size;
     const containerStyle = {
       ...(titleSize
         ? {
@@ -86,6 +93,15 @@ export class RoomTitleCard extends BaseCard<RoomTitleCardConfig> {
           }
         : {}),
       ...(config.icon_gap !== undefined ? { "--icon-gap": `${config.icon_gap}px` } : {}),
+      ...(iconSize
+        ? {
+            "--icon-size": `${iconSize}px`,
+            "--icon-symbol-size": `${Math.round(iconSize * SYMBOL_RATIO * 10) / 10}px`,
+            // Declared here too: the :host default resolved --icon-size before
+            // this override existed, and custom properties do not re-resolve.
+            "--icon-bare-symbol-size": `${iconSize}px`,
+          }
+        : {}),
     };
 
     return html`

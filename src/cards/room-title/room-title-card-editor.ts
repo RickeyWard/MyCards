@@ -39,6 +39,12 @@ const SCHEMA: readonly HaFormSchema[] = [
     },
   },
   {
+    name: "icon_size",
+    selector: {
+      number: { min: 12, max: 96, step: 1, unit_of_measurement: "px", mode: "slider" },
+    },
+  },
+  {
     name: "icon_gap",
     selector: {
       number: { min: 0, max: 48, step: 1, unit_of_measurement: "px", mode: "slider" },
