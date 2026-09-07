@@ -38,7 +38,10 @@ system_health:
 lovelace:
   mode: yaml
   resources:
-    - url: /local/mycards/mycards.js
+    # Served by the `cards` container with caching disabled, so a plain
+    # browser reload always gets the latest build. A real install would use
+    # /local/mycards.js instead.
+    - url: http://localhost:8099/mycards.js
       type: module
 
 logger:

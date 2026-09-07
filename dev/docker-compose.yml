@@ -9,9 +9,18 @@ services:
     volumes:
       # HA config lives in the repo so it is reproducible and disposable.
       - ./config:/config
-      # The build output is served at /local/mycards/mycards.js.
-      # `npm run watch` rewrites it in place; just reload the browser.
-      - ../dist:/config/www/mycards:ro
     environment:
       TZ: ${TZ:-America/New_York}
+    restart: unless-stopped
+
+  # The bundle is served from here rather than HA's /local, which sends a
+  # 31-day Cache-Control and would keep serving a stale card after a rebuild.
+  cards:
+    image: nginx:alpine
+    container_name: mycards-assets
+    ports:
+      - "8099:80"
+    volumes:
+      - ../dist:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     restart: unless-stopped

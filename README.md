@@ -59,8 +59,8 @@ The card is fully configurable from the UI editor.
 ### Run a throwaway Home Assistant
 
 The repo ships a disposable HA instance under [dev/](dev/): a container with `dist/` mounted
-at `/local/mycards/`, the resource pre-registered, deterministic test entities, and onboarding
-completed for you. Requires Docker.
+with the resource pre-registered, deterministic test entities, and onboarding completed for
+you. Requires Docker.
 
 ```bash
 npm run dev        # build, start HA on :8123, onboard it, then watch for changes
@@ -79,9 +79,12 @@ is titled _Cards_, at <http://localhost:8123/lovelace/cards>.
 
 The loop from there:
 
-- **Card source change** → `npm run watch` rebuilds `dist/mycards.js` → hard-reload the
-  browser (`Ctrl+Shift+R`). Keep DevTools open with _Disable cache_ ticked; HA caches
-  dashboard resources aggressively.
+- **Card source change** → `npm run watch` rebuilds `dist/mycards.js` → reload the browser.
+  A plain reload is enough: the bundle is served by a second container (`mycards-assets`,
+  port 8099) that sends `Cache-Control: no-store`. HA's own `/local` path sends a 31-day
+  cache header, which serves a stale card long after a rebuild — the symptom is a
+  _Configuration error_ naming an option you just added, because the old bundle is still
+  validating the new YAML.
 - **Dashboard change** → edit `dev/config/ui-lovelace.yaml` → reload. No HA restart needed.
 - **HA config change** (new test entities) → restart the container, or Developer tools →
   YAML → _Reload template entities_.
@@ -111,8 +114,9 @@ npm run watch
 ln -s /path/to/this/repo/dist/mycards.js www/mycards.js
 ```
 
-Then register `/local/mycards.js?v=dev` as a JavaScript module resource, bumping `?v=` to
-bust the cache.
+Then register `/local/mycards.js?v=dev` as a JavaScript module resource. Bump `?v=` after
+every rebuild — `/local` is cached for 31 days, so nothing short of a new URL or a
+cache-disabled hard reload will pick the change up.
 
 ### Other scripts
 
