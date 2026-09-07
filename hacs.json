@@ -1,0 +1,6 @@
+{
+  "name": "MyCards",
+  "render_readme": true,
+  "filename": "mycards.js",
+  "homeassistant": "2024.8.0"
+}
