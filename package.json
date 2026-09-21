@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "custom-card-helpers": "^1.9.0",
-    "home-assistant-js-websocket": "^9.4.0",
+    "home-assistant-js-websocket": "^9.7.0",
     "lit": "^3.2.1",
     "memoize-one": "^6.0.0",
     "superstruct": "^2.0.2"
